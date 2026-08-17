@@ -1,20 +1,20 @@
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Task {
 
-    private static int idCounter = 1;
     private final int id;
     private String description;
     private TaskStatus status;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Task(String description) {
+    public Task(int id, String description) {
         if (description == null || description.isBlank()) {
             throw new IllegalArgumentException("Description cannot be blank.");
         }
         this.description = description;
-        id = Task.idCounter++;
+        this.id = id;
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
         status = TaskStatus.TODO;
@@ -23,5 +23,11 @@ public class Task {
     @Override
     public String toString() {
         return "Task " + id + ": " + description;
+    }
+
+    public static int getIdFromString(String taskString) {
+        Scanner s = new Scanner(taskString);
+        int id = s.useDelimiter("\\D+").nextInt();
+        return id;
     }
 }
